@@ -1,6 +1,6 @@
 import { EstatesReducers } from 'contexts/real-estates/constants/estates-reducers';
 import { EstatesState } from 'contexts/real-estates/constants/estates-state.type';
-import { EstatesAction } from 'contexts/real-estates/constants/estates-action.type';
+import { EstatesActionType } from 'contexts/real-estates/constants/estates-action.type';
 
 const {
   ESTATES_REQUEST,
@@ -11,7 +11,7 @@ const {
 
 const rootReducer = (
   state: EstatesState,
-  action: EstatesAction
+  action: EstatesActionType
 ): EstatesState => {
   switch (action.type) {
     case ESTATES_REQUEST:

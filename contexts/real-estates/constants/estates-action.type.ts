@@ -9,7 +9,7 @@ const {
   ESTATES_IDLE,
 } = EstatesReducers;
 
-export type EstatesAction =
+export type EstatesActionType =
   | { type: typeof ESTATES_REQUEST }
   | { type: typeof ESTATES_IDLE }
   | { type: typeof GET_ALL_ESTATES_SUCCESS; payload: IRealEstate[] }
