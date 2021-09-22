@@ -7,7 +7,7 @@ const defaultEstatesState: EstatesState = {
   error: undefined,
 };
 
-const estatesContext = createContext(defaultEstatesState);
-const estatesDispatchContext = createContext({});
+const EstatesContext = createContext(defaultEstatesState);
+const EstatesDispatchContext = createContext({});
 
-export { estatesContext, estatesDispatchContext };
+export { EstatesContext, EstatesDispatchContext, defaultEstatesState };
