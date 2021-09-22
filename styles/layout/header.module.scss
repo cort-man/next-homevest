@@ -1,0 +1,27 @@
+.header {
+  position: sticky;
+  background-color: #fff;
+
+  top: 0;
+  z-index: 10;
+
+  padding: $padding-md;
+
+  &__content {
+
+    height: 20px;
+    width: 100%;
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+
+    &_logo {
+      max-height: 100%;
+    }
+
+    &_button {
+      max-height: 100%;
+    }
+  }
+}
