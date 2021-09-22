@@ -1,6 +1,14 @@
 .real_estates_card {
   padding: $padding-xl;
-  width: 50%;
+  width: 100%;
+
+  @include md {
+    width: 50%;
+  }
+
+  @include lg {
+    width: 33.3%;
+  }
 
   &_content {
 
