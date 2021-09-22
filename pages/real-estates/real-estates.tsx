@@ -1,14 +1,18 @@
-import React from 'react';
-import { useEstates } from 'contexts/real-estates/hooks';
-import { ENV } from 'common/enums/env';
+import React, { useEffect } from 'react';
+import { useEstates, useEstatesDispatch } from 'contexts/real-estates/hooks';
+import { EstatesService } from 'services';
 
 export const RealEstates: React.FC = () => {
   const state = useEstates();
 
-  //console.log(state);
+  const dispatch = useEstatesDispatch();
 
-  console.log(ENV);
-  //console.log(process.env);
+  console.log(state);
 
-  return <div>{ENV.API_ORIGIN_URL + '121'}</div>;
+  useEffect(() => {
+    const estatesService = new EstatesService(dispatch);
+    estatesService.getAll();
+  }, [dispatch]);
+
+  return <div>Test</div>;
 };

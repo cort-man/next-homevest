@@ -1,5 +1,6 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import { EstatesState } from 'contexts/real-estates/constants/estates-state.type';
+import { EstatesActionType } from 'contexts/real-estates/constants/estates-action.type';
 
 const defaultEstatesState: EstatesState = {
   data: [],
@@ -8,6 +9,8 @@ const defaultEstatesState: EstatesState = {
 };
 
 const EstatesContext = createContext(defaultEstatesState);
-const EstatesDispatchContext = createContext({});
+const EstatesDispatchContext = createContext(
+  {} as React.Dispatch<EstatesActionType>
+);
 
 export { EstatesContext, EstatesDispatchContext, defaultEstatesState };

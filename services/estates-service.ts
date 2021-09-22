@@ -21,7 +21,7 @@ class EstatesService {
     this.dispatch = dispatch;
   }
 
-  async getAll() {
+  async getAll(): Promise<void> {
     this.dispatch(estatesRequest());
 
     try {
@@ -36,7 +36,7 @@ class EstatesService {
     }
   }
 
-  idleEstates() {
+  idleEstates(): void {
     this.dispatch(estatesIdle());
   }
 }
