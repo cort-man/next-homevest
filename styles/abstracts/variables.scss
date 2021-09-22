@@ -4,11 +4,26 @@ $screen-lg-min: 992px;
 $screen-xl-min: 1440px;
 
 $primary-color: #4252BD;
+$secondary-color: linear-gradient(
+                90deg, rgba(255,95,29,1) 0%, rgba(255,95,29,1) 35%, rgba(255,148,2,1) 100%);
 
 $text-color-primary: #4A4A4A;
-$text-color-secondary: #fff;
-$text-color-tertiary: #777777;
+$text-color-secondary: #777777;
+$text-color-tertiary: #fff;
+
+$purple-text-color-primary: #3F51B5;
 
 $border-secondary: 1px solid #f5f5f5;
 
+$shadow-secondary: 0 4px 12px rgb(0 0 0 / 12%);
+
 $rounded-sm: 3px;
+$rounded-md: 4px;
+
+$padding-md: 0.5rem;
+$padding-lg: 1rem;
+$padding-xl: 1.5rem;
+
+$margin-md: 0.5rem;
+$margin-lg: 1rem;
+$margin-xl: 1.5rem;

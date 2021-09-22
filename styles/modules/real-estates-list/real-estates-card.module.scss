@@ -1,5 +1,5 @@
 .real_estates_card {
-  padding: 1.5rem;
+  padding: $padding-xl;
   width: 50%;
 
   &_content {
@@ -16,8 +16,8 @@
         padding-top: 75%;
 
         &_caption {
-          color: $text-color-secondary;
-          padding: 0 5px;
+          color: $text-color-tertiary;
+          padding: 0 $padding-md;
 
           width: 100%;
           bottom: 0;
@@ -29,8 +29,8 @@
       }
 
     .info_container {
-      margin: 0.5rem 0;
-      color: $text-color-tertiary;
+      margin: $margin-md 0;
+      color: $text-color-secondary;
 
       .text {
         display: flex;
@@ -39,10 +39,21 @@
 
       .buttons {
 
+        display: flex;
+        gap: 1rem;
+
+        padding: $padding-md 0;
+
         border-top: $border-secondary;
         border-bottom: $border-secondary;
-        height: 5px;
 
+        .see_now__button, .analyze__link {
+          width: 50%;
+        }
+
+        .analyze__link {
+          text-align: center;
+        }
       }
 
       .bold_text {

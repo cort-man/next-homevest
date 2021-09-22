@@ -1,0 +1,15 @@
+.button {
+  width: 100%;
+
+  border-radius: $rounded-md;
+  box-shadow: $shadow-secondary;
+
+  background: $secondary-color;
+
+  border:none;
+
+  .text {
+    color: $text-color-tertiary;
+    font-weight: bold;
+  }
+}
