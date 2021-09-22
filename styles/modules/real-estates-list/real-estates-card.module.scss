@@ -1,0 +1,54 @@
+.real_estates_card {
+  padding: 1.5rem;
+  width: 50%;
+
+  &_content {
+
+      .picture {
+        position: relative;
+        overflow: hidden;
+
+        border-radius: $rounded-sm;
+
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 75%;
+
+        &_caption {
+          color: $text-color-secondary;
+          padding: 0 5px;
+
+          width: 100%;
+          bottom: 0;
+          position: absolute;
+
+          background-color: $primary-color;
+          opacity: 80%;
+        }
+      }
+
+    .info_container {
+      margin: 0.5rem 0;
+      color: $text-color-tertiary;
+
+      .text {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .buttons {
+
+        border-top: $border-secondary;
+        border-bottom: $border-secondary;
+        height: 5px;
+
+      }
+
+      .bold_text {
+        color: $text-color-primary;
+        font-weight: bold;
+      }
+    }
+  }
+}

@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
-import { useEstates, useEstatesDispatch } from 'contexts/real-estates/hooks';
 import { EstatesService } from 'services';
+import RealEstatesList from 'modules/real-estates-list';
+import { useEstates, useEstatesDispatch } from 'contexts/real-estates/hooks';
 
 export const RealEstates: React.FC = () => {
-  const state = useEstates();
+  const estatesState = useEstates();
 
   const dispatch = useEstatesDispatch();
-
-  console.log(state);
 
   useEffect(() => {
     const estatesService = new EstatesService(dispatch);
     estatesService.getAll();
   }, [dispatch]);
 
-  return <div>Test</div>;
+  return (
+    <div>
+      <RealEstatesList estates={estatesState.data} />
+    </div>
+  );
 };

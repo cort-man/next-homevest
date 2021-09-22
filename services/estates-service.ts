@@ -25,9 +25,9 @@ class EstatesService {
     this.dispatch(estatesRequest());
 
     try {
-      const estates: IRealEstate[] = await estatesApi.get(ROOT);
+      const estates = await estatesApi.get<IRealEstate[]>(ROOT);
 
-      this.dispatch(getAllEstatesSuccess(estates));
+      this.dispatch(getAllEstatesSuccess(estates.data));
     } catch (error) {
       const message = (error as Error).message;
 
