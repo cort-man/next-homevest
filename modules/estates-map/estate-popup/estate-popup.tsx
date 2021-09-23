@@ -13,11 +13,14 @@ import {
 } from '@heroicons/react/solid';
 
 interface IEstatePopupProps {
-  setSelectedProperty: (property: IRealEstate) => void;
+  setSelectedProperty: (property: IRealEstate | null) => void;
   selectedProperty: IRealEstate;
 }
 
-const EstatePopup: React.FC<IEstatePopupProps> = ({ selectedProperty }) => (
+const EstatePopup: React.FC<IEstatePopupProps> = ({
+  selectedProperty,
+  setSelectedProperty,
+}) => (
   <Popup
     latitude={selectedProperty.coordinates[0]}
     longitude={selectedProperty.coordinates[1]}
@@ -36,7 +39,10 @@ const EstatePopup: React.FC<IEstatePopupProps> = ({ selectedProperty }) => (
             <span className={classes.home_text}>Entire Home</span>
           </div>
           <div className={classes.top__button_close}>
-            <XIcon className={classes.icon} />
+            <XIcon
+              className={classes.icon}
+              onClick={() => setSelectedProperty(null)}
+            />
           </div>
         </div>
         <div className={classes.bottom}>
