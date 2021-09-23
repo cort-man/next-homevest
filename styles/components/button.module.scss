@@ -6,12 +6,12 @@
 
   cursor: pointer;
 
-  background: $secondary-color;
+  background: $light-color-primary;
 
   border:none;
 
   .text {
-    color: $text-color-tertiary;
+    color: $white-color-primary;
     font-weight: bold;
   }
 }

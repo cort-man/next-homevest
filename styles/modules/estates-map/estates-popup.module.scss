@@ -1,6 +1,6 @@
 .estates_popup {
   margin: -10px -10px -15px;;
-  width: 350px;
+  width: 500px;
   border-radius: $rounded-sm;
   overflow: hidden;
 
@@ -24,36 +24,117 @@
         border-radius: $rounded-lg;
         padding: $padding-sm;
         display: flex;
-        gap: 4px;
-        color: $text-color-secondary;
+        align-items: end;
+        color: $grey-color-secondary;
+        cursor: pointer;
 
         .home_icon {
-          background-color: $primary-color;
+          @include icon;
+
+          background-color: $dark-color-primary;
           border-radius: $rounded-full;
-          color: $text-color-tertiary;
-          padding: 1px;
-          height: 20px;
-          width: 20px;
+          color: $white-color-primary;
+        }
+
+        .home_text {
+          padding: 0 $padding-sm;
         }
       }
 
       &__button_close {
-        cursor: pointer;
-        background-color: #fff;
-        color: $text-color-secondary;
-        height: 20px;
-        width: 20px;
-        border-radius: $rounded-full;
-
         .icon {
-          height: 100%;
-          width: 100%;
+          @include icon;
+          background-color: #fff;
+          color: $grey-color-secondary;
+          border-radius: $rounded-full;
         }
       }
     }
 
     .bottom {
+      position: absolute;
+      padding: 0 $padding-sm;
+      bottom: 0;
+      width: 100%;
+      background-color: $white-color-primary;
+      color: $grey-color-primary;
+      display: flex;
+      justify-content: space-between;
 
+      .icon_container {
+        display: flex;
+        cursor: pointer;
+
+        .icon {
+          @include icon;
+        }
+      }
+    }
+  }
+
+  .content {
+    &__info {
+      padding: $padding-sm;
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: $dark-color-secondary;
+        font-weight: bold;
+
+        .icon {
+          @include icon($icon-md);
+          color: $light-color-secondary;
+        }
+      }
+
+      .description {
+        &__selected {
+          color: $dark-color-secondary;
+        }
+      }
+    }
+
+    &__stats {
+      position: relative;
+
+      .header {
+        position: absolute;
+        left: 50%;
+        top:0;
+        transform: translateX(-50%) translateY(-50%);
+        width: 35%;
+
+        text-align: center;
+
+        border-radius: $rounded-lg;
+        border: $border-md;
+
+        background-color: #fff;
+      }
+
+      .container {
+        display: flex;
+        gap: 2px;
+
+        .card {
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          flex: 1;
+          text-align: center;
+          background-color: $grey-color-tertiary;
+          padding: $padding-lg;
+
+          &__value {
+            font-weight: bold;
+          }
+
+          &__name {
+            color: $grey-color-primary;
+          }
+        }
+      }
     }
   }
 }
