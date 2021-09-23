@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import EstatesMap from 'modules/estates-map/EstatesMap';
+import EstatesMap from 'modules/estates-map/estates-map';
 import { useEstates } from 'contexts/real-estates/hooks';
 import { MapViewport } from 'common/interfaces';
 
