@@ -1,0 +1,61 @@
+.estates_popup {
+  margin: -10px -10px -15px;;
+  width: 350px;
+  border-radius: $rounded-sm;
+  overflow: hidden;
+
+  .picture {
+    position: relative;
+    @include filled-background;
+    padding-top: 50%;
+
+    .top {
+      padding: $padding-md;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &__button {
+        background-color: #fff;
+        border-radius: $rounded-lg;
+        padding: $padding-sm;
+        display: flex;
+        gap: 4px;
+        color: $text-color-secondary;
+
+        .home_icon {
+          background-color: $primary-color;
+          border-radius: $rounded-full;
+          color: $text-color-tertiary;
+          padding: 1px;
+          height: 20px;
+          width: 20px;
+        }
+      }
+
+      &__button_close {
+        cursor: pointer;
+        background-color: #fff;
+        color: $text-color-secondary;
+        height: 20px;
+        width: 20px;
+        border-radius: $rounded-full;
+
+        .icon {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    .bottom {
+
+    }
+  }
+}
+
+

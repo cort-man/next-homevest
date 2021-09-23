@@ -6,6 +6,7 @@ import { useEstatesDispatch } from 'contexts/real-estates/hooks';
 import { IViewPoints } from 'common/interfaces/view-points.interface';
 import { EstatesService } from 'services';
 import EstateMarker from 'modules/estates-map/estate-marker';
+import EstatePopup from 'modules/estates-map/estate-popup';
 
 type EstatesMapProps = {
   mapViewport: MapViewport;
@@ -68,6 +69,17 @@ const EstatesMap: React.FC<EstatesMapProps> = ({
     [estates]
   );
 
+  const selectedEstatePopup = useMemo(
+    () =>
+      selectedProperty ? (
+        <EstatePopup
+          selectedProperty={selectedProperty}
+          setSelectedProperty={setSelectedProperty}
+        />
+      ) : null,
+    [selectedProperty]
+  );
+
   return (
     <ReactMapGL
       {...mapViewport}
@@ -81,6 +93,7 @@ const EstatesMap: React.FC<EstatesMapProps> = ({
       }
     >
       {propertiesMarkers}
+      {selectedEstatePopup}
     </ReactMapGL>
   );
 };

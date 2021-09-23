@@ -14,13 +14,10 @@
 
       .picture {
         position: relative;
-        overflow: hidden;
+
+        @include filled-background;
 
         border-radius: $rounded-sm;
-
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
         padding-top: 75%;
 
         &_caption {
