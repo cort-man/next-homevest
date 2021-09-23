@@ -1,3 +1,4 @@
+/*
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import ReactMapGL, { MapRef, WebMercatorViewport } from 'react-map-gl';
 import { ENV } from 'common/enums';
@@ -99,3 +100,84 @@ const EstatesMap: React.FC<EstatesMapProps> = ({
 };
 
 export default EstatesMap;
+*/
+
+import React, { useEffect, useMemo } from 'react';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { ENV } from 'common/enums';
+import { IRealEstate } from 'common/interfaces';
+import EstateMarker from 'modules/estates-map/estate-marker';
+import { useEstatesDispatch } from 'contexts/real-estates/hooks';
+import { EstatesService } from 'services';
+
+const containerStyle = {
+  width: '100vh',
+  height: '100vw',
+};
+
+const center = {
+  lat: 50.4501,
+  lng: 30.5234,
+};
+
+type EstatesMapProps = {
+  estates: IRealEstate[];
+};
+
+const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
+  const [selectedProperty, setSelectedProperty] =
+    React.useState<IRealEstate | null>(null);
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: ENV.GOOGLE_MAPS_API_KEY,
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const dispatch = useEstatesDispatch();
+
+  useEffect(() => {
+    const estatesService = new EstatesService(dispatch);
+    estatesService.getAll();
+    //fetchPropertiesInArea();
+  }, [dispatch]);
+
+  const onLoad = React.useCallback(function callback(map) {
+    /* const bounds = new window.google.maps.LatLngBounds();
+    map.fitBounds(bounds);
+    setMap(map);*/
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
+  const propertiesMarkers = useMemo(
+    () =>
+      estates.map((estate) => (
+        <EstateMarker
+          key={estate.id}
+          property={estate}
+          setSelectedProperty={setSelectedProperty}
+        />
+      )),
+    [estates]
+  );
+
+  return isLoaded ? (
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={10}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+    >
+      {propertiesMarkers}
+    </GoogleMap>
+  ) : (
+    <></>
+  );
+};
+
+export default React.memo(EstatesMap);

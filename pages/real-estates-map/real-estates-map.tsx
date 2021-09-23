@@ -10,17 +10,11 @@ const defaultMapValue: MapViewport = {
 };
 
 const RealEstatesMap: React.FC = () => {
-  const [mapViewport, setMapViewport] = useState(defaultMapValue);
-
   const estatesState = useEstates();
 
   return (
     <div>
-      <EstatesMap
-        estates={estatesState.data}
-        mapViewport={mapViewport}
-        setViewport={setMapViewport}
-      />
+      <EstatesMap estates={estatesState.data} />
     </div>
   );
 };

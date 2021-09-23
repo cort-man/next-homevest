@@ -1,5 +1,5 @@
 import React from 'react';
-import { Marker } from 'react-map-gl';
+import { Marker } from '@react-google-maps/api';
 import { IRealEstate } from 'common/interfaces';
 import classes from 'styles/modules/estates-map/estate-marker.module.scss';
 
@@ -17,7 +17,7 @@ const EstateMarker: React.FC<PropertyMarkerProps> = ({
 
   return (
     <div className={classes.estates_marker}>
-      <Marker longitude={longitude} latitude={latitude}>
+      <Marker position={{ lat: latitude, lng: longitude }}>
         <div
           className={classes.estates_marker__icon}
           onClick={() => setSelectedProperty(property)}
