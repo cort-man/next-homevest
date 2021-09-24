@@ -109,6 +109,7 @@ import { IRealEstate } from 'common/interfaces';
 import EstateMarker from 'modules/estates-map/estate-marker';
 import { useEstatesDispatch } from 'contexts/real-estates/hooks';
 import { EstatesService } from 'services';
+import EstatePopup from 'modules/estates-map/estate-popup';
 
 const containerStyle = {
   width: '100vh',
@@ -143,12 +144,6 @@ const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
     //fetchPropertiesInArea();
   }, [dispatch]);
 
-  const onLoad = React.useCallback(function callback(map) {
-    /* const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map);*/
-  }, []);
-
   const onUnmount = React.useCallback(function callback(map) {
     setMap(null);
   }, []);
@@ -165,15 +160,27 @@ const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
     [estates]
   );
 
+  const selectedEstatePopup = useMemo(
+    () =>
+      selectedProperty ? (
+        <EstatePopup
+          selectedProperty={selectedProperty}
+          setSelectedProperty={setSelectedProperty}
+        />
+      ) : null,
+    [selectedProperty]
+  );
+
+  console.log('123');
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
       zoom={10}
-      onLoad={onLoad}
       onUnmount={onUnmount}
     >
       {propertiesMarkers}
+      {selectedEstatePopup}
     </GoogleMap>
   ) : (
     <></>

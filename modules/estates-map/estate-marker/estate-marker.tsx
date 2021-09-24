@@ -17,12 +17,10 @@ const EstateMarker: React.FC<PropertyMarkerProps> = ({
 
   return (
     <div className={classes.estates_marker}>
-      <Marker position={{ lat: latitude, lng: longitude }}>
-        <div
-          className={classes.estates_marker__icon}
-          onClick={() => setSelectedProperty(property)}
-        />
-      </Marker>
+      <Marker
+        position={{ lat: latitude, lng: longitude }}
+        onClick={() => setSelectedProperty(property)}
+      />
     </div>
   );
 };
