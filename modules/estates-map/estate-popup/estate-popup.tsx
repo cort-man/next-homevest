@@ -1,6 +1,6 @@
 import React from 'react';
 import { IRealEstate } from 'common/interfaces';
-import { InfoBox } from '@react-google-maps/api';
+import { InfoWindow } from '@react-google-maps/api';
 import classes from 'styles/modules/estates-map/estates-popup.module.scss';
 import { XIcon } from '@heroicons/react/outline';
 import {
@@ -21,7 +21,7 @@ const EstatePopup: React.FC<IEstatePopupProps> = ({
   selectedProperty,
   setSelectedProperty,
 }) => (
-  <InfoBox
+  <InfoWindow
     position={{
       lat: selectedProperty.coordinates[0],
       lng: selectedProperty.coordinates[1],
@@ -101,7 +101,7 @@ const EstatePopup: React.FC<IEstatePopupProps> = ({
         </div>
       </div>
     </div>
-  </InfoBox>
+  </InfoWindow>
 );
 
 export default EstatePopup;
