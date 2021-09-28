@@ -24,3 +24,27 @@ const WithHandling = <P extends Record<string, any>>(
 };
 
 export default WithHandling;*/
+
+import React, { Component, ComponentType, ReactElement } from 'react';
+import { NextComponentType } from 'next';
+
+interface InjectedProps {
+  requestMethod: string;
+}
+
+export function withHandling<T>(Component: NextComponentType<T>) {
+  // eslint-disable-next-line react/display-name
+  return (hocProps: T): ReactElement<T> => {
+    console.log('123123123');
+
+    return <Component {...(hocProps as T)} />;
+  };
+}
+
+const Test: React.FC = () => {
+  console.log('0987');
+
+  return <div>123</div>;
+};
+
+export default withHandling(Test);
