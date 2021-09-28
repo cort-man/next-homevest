@@ -1,8 +1,15 @@
-import 'styles/base/reset.scss'
+import React from 'react';
+import type { AppProps } from 'next/app';
+import EstatesProvider from 'contexts/real-estates/components';
+import Header from 'layout/header/header';
+import 'styles/base/reset.scss';
 
-import type { AppProps } from 'next/app'
-
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
+  return (
+    <EstatesProvider>
+      <Header />
+      <Component {...pageProps} />
+    </EstatesProvider>
+  );
 }
-export default MyApp
+export default MyApp;

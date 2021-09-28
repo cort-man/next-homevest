@@ -1,0 +1,17 @@
+.button {
+  width: 100%;
+
+  border-radius: $rounded-md;
+  box-shadow: $shadow-secondary;
+
+  cursor: pointer;
+
+  background: $light-color-primary;
+
+  border:none;
+
+  .text {
+    color: $white-color-primary;
+    font-weight: bold;
+  }
+}
