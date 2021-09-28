@@ -8,6 +8,7 @@ const {
   ESTATES_REQUEST,
   GET_ALL_ESTATES_SUCCESS,
   ESTATES_IDLE,
+  GET_ESTATES_IN_AREA_SUCCESS,
 } = EstatesReducers;
 
 export const estatesRequest = (): EstatesActionType => ({
@@ -25,5 +26,12 @@ export const getAllEstatesSuccess = (
   data: IRealEstate[]
 ): EstatesActionType => ({
   type: GET_ALL_ESTATES_SUCCESS,
+  payload: data,
+});
+
+export const getEstatesInAreaSuccess = (
+  data: IRealEstate[]
+): EstatesActionType => ({
+  type: GET_ESTATES_IN_AREA_SUCCESS,
   payload: data,
 });

@@ -14,31 +14,28 @@
 
       .picture {
         position: relative;
-        overflow: hidden;
+
+        @include filled-background;
 
         border-radius: $rounded-sm;
-
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
         padding-top: 75%;
 
         &_caption {
-          color: $text-color-tertiary;
+          color: $white-color-primary;
           padding: 0 $padding-md;
 
           width: 100%;
           bottom: 0;
           position: absolute;
 
-          background-color: $primary-color;
+          background-color: $dark-color-primary;
           opacity: 80%;
         }
       }
 
     .info_container {
       margin: $margin-md 0;
-      color: $text-color-secondary;
+      color: $grey-color-secondary;
 
       .text {
         display: flex;
@@ -52,8 +49,8 @@
 
         padding: $padding-md 0;
 
-        border-top: $border-secondary;
-        border-bottom: $border-secondary;
+        border-top: $border-sm;
+        border-bottom: $border-sm;
 
         .see_now__button, .analyze__link {
           width: 50%;
@@ -65,7 +62,7 @@
       }
 
       .bold_text {
-        color: $text-color-primary;
+        color: $grey-color-primary;
         font-weight: bold;
       }
     }

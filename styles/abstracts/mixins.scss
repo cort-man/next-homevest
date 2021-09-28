@@ -21,3 +21,18 @@
     @content;
   }
 }
+
+@mixin filled-background {
+  overflow: hidden;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@mixin icon ($size: $icon-sm) {
+  cursor: pointer;
+  padding: $padding-sm;
+  height: $size;
+  width: $size;
+}
