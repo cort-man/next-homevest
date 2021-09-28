@@ -27,6 +27,7 @@ const useRequest = <Args, ReturnData>(
       setError(error as Error);
     } finally {
       setLoading(false);
+      setRequest(null);
     }
   }, [request, asyncFunc]);
 

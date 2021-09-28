@@ -2,20 +2,33 @@ import React, { useEffect } from 'react';
 import { EstatesService } from 'services';
 import RealEstatesList from 'modules/real-estates-list';
 import { useEstates, useEstatesDispatch } from 'contexts/real-estates/hooks';
+import { useRequest } from 'common/hooks/useRequest';
+import { estatesApi } from 'api';
+import { IRealEstate } from 'common/interfaces';
+
+import { EstatesApi } from 'common/enums/api';
+
+const { ROOT, IN_AREA } = EstatesApi;
 
 export const RealEstates: React.FC = () => {
-  const estatesState = useEstates();
+  /*  const estatesState = useEstates();
 
   const dispatch = useEstatesDispatch();
 
   useEffect(() => {
     const estatesService = new EstatesService(dispatch);
     estatesService.getAll();
-  }, [dispatch]);
+  }, [dispatch]);*/
 
-  return (
-    <div>
-      <RealEstatesList estates={estatesState.data} />
-    </div>
+  const { data, loading, setRequest, error } = useRequest(async () =>
+    estatesApi.get<IRealEstate[]>(ROOT)
   );
+
+  useEffect(() => {
+    setRequest(undefined);
+  }, []);
+
+  console.log(data, loading, error);
+
+  return <div>{/* <RealEstatesList estates={estatesState.data} />*/}</div>;
 };
