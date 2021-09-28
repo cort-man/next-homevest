@@ -1,3 +1,3 @@
-import EstatesService from 'services/estates-service';
+import EstatesService from 'services/estates/estates-service';
 
 export { EstatesService };

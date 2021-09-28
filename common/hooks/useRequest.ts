@@ -1,47 +1,44 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
+
+type RequestArgs<Args> = Args | undefined;
 
 interface IUseRequestReturn<Args, ReturnData> {
   loading: boolean;
   error: Error | undefined;
   data: ReturnData | undefined;
-  setRequest: (args: Args | null) => void;
+  makeControlledRequest: (args?: RequestArgs<Args>) => void;
 }
 
-type AsyncFunction<Args, ReturnData> = (args: Args) => Promise<ReturnData>;
+type AsyncFunction<Args, ReturnData> = (
+  args: Args | undefined
+) => Promise<ReturnData>;
 
 const buildUseRequest = <Args, ReturnData>(
   asyncFunc: AsyncFunction<Args, ReturnData>
-) => {
-  const useRequest = (): IUseRequestReturn<Args, ReturnData> => {
+): (() => IUseRequestReturn<Args, ReturnData>) => {
+  return (): IUseRequestReturn<Args, ReturnData> => {
     const [loading, setLoading] = useState(false);
-    const [request, setRequest] = useState<Args | null>(null);
     const [data, setData] = useState<ReturnData | undefined>();
     const [error, setError] = useState<Error>();
 
-    const makeRequest = useCallback(async () => {
-      if (request === null) return;
+    const makeControlledRequest = useCallback(
+      async (args?: RequestArgs<Args>) => {
+        setLoading(true);
 
-      setLoading(true);
+        try {
+          const data = await asyncFunc(args);
+          setData(data);
+        } catch (error) {
+          setError(error as Error);
+        } finally {
+          setLoading(false);
+        }
+      },
+      []
+    );
 
-      try {
-        const data = await asyncFunc(request);
-        setData(data);
-      } catch (error) {
-        setError(error as Error);
-      } finally {
-        setLoading(false);
-        setRequest(null);
-      }
-    }, [request]);
-
-    useEffect(() => {
-      makeRequest();
-    }, [makeRequest]);
-
-    return { loading, error, data, setRequest };
+    return { loading, error, data, makeControlledRequest };
   };
-
-  return useRequest;
 };
 
 export { buildUseRequest };
