@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { EstatesService } from 'services';
 import RealEstatesList from 'modules/real-estates-list';
-import { useEstates, useEstatesDispatch } from 'contexts/real-estates/hooks';
 import { buildUseRequest } from 'common/hooks/useRequest';
 import { estatesApi } from 'api';
 import { IRealEstate } from 'common/interfaces';

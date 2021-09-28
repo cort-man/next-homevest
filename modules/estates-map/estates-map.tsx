@@ -104,10 +104,9 @@ export default EstatesMap;
 
 import React, { useEffect, useMemo } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { ENV } from 'common/enums';
+import { AppConfig } from 'config';
 import { IRealEstate } from 'common/interfaces';
 import EstateMarker from 'modules/estates-map/estate-marker';
-import { useEstatesDispatch } from 'contexts/real-estates/hooks';
 import { EstatesService } from 'services';
 import EstatePopup from 'modules/estates-map/estate-popup';
 
@@ -131,18 +130,10 @@ const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: ENV.GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: AppConfig.GOOGLE_MAPS_API_KEY,
   });
 
   const [map, setMap] = React.useState(null);
-
-  const dispatch = useEstatesDispatch();
-
-  useEffect(() => {
-    const estatesService = new EstatesService(dispatch);
-    estatesService.getAll();
-    //fetchPropertiesInArea();
-  }, [dispatch]);
 
   const onUnmount = React.useCallback(function callback(map) {
     setMap(null);
