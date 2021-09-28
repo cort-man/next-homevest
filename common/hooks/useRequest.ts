@@ -7,35 +7,41 @@ interface IUseRequestReturn<Args, ReturnData> {
   setRequest: (args: Args | null) => void;
 }
 
-const useRequest = <Args, ReturnData>(
-  asyncFunc: (args: Args) => Promise<ReturnData>
-): IUseRequestReturn<Args, ReturnData> => {
-  const [loading, setLoading] = useState(false);
-  const [request, setRequest] = useState<Args | null>(null);
-  const [data, setData] = useState<ReturnData | undefined>();
-  const [error, setError] = useState<Error>();
+type AsyncFunction<Args, ReturnData> = (args: Args) => Promise<ReturnData>;
 
-  const makeRequest = useCallback(async () => {
-    if (request === null) return;
+const buildUseRequest = <Args, ReturnData>(
+  asyncFunc: AsyncFunction<Args, ReturnData>
+) => {
+  const useRequest = (): IUseRequestReturn<Args, ReturnData> => {
+    const [loading, setLoading] = useState(false);
+    const [request, setRequest] = useState<Args | null>(null);
+    const [data, setData] = useState<ReturnData | undefined>();
+    const [error, setError] = useState<Error>();
 
-    setLoading(true);
+    const makeRequest = useCallback(async () => {
+      if (request === null) return;
 
-    try {
-      const data = await asyncFunc(request);
-      setData(data);
-    } catch (error) {
-      setError(error as Error);
-    } finally {
-      setLoading(false);
-      setRequest(null);
-    }
-  }, [request, asyncFunc]);
+      setLoading(true);
 
-  useEffect(() => {
-    makeRequest();
-  }, [makeRequest]);
+      try {
+        const data = await asyncFunc(request);
+        setData(data);
+      } catch (error) {
+        setError(error as Error);
+      } finally {
+        setLoading(false);
+        setRequest(null);
+      }
+    }, [request]);
 
-  return { loading, error, data, setRequest };
+    useEffect(() => {
+      makeRequest();
+    }, [makeRequest]);
+
+    return { loading, error, data, setRequest };
+  };
+
+  return useRequest;
 };
 
-export { useRequest };
+export { buildUseRequest };

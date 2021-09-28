@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { EstatesService } from 'services';
 import RealEstatesList from 'modules/real-estates-list';
 import { useEstates, useEstatesDispatch } from 'contexts/real-estates/hooks';
-import { useRequest } from 'common/hooks/useRequest';
+import { buildUseRequest } from 'common/hooks/useRequest';
 import { estatesApi } from 'api';
 import { IRealEstate } from 'common/interfaces';
 
@@ -20,13 +20,15 @@ export const RealEstates: React.FC = () => {
     estatesService.getAll();
   }, [dispatch]);*/
 
-  const { data, loading, setRequest, error } = useRequest(async () =>
+  const useRequest = buildUseRequest(async () =>
     estatesApi.get<IRealEstate[]>(ROOT)
   );
 
+  const { data, loading, setRequest, error } = useRequest();
+
   useEffect(() => {
     setRequest(undefined);
-  }, []);
+  }, [setRequest]);
 
   console.log(data, loading, error);
 
