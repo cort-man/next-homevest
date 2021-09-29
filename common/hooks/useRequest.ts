@@ -1,21 +1,30 @@
 import { useCallback, useState } from 'react';
 
-type RequestArgs<Args> = Args | undefined;
+export type RequestArgs<Args> = Args | undefined;
+
+type AsyncFunction<Args, ReturnData> = (
+  args?: RequestArgs<Args>
+) => Promise<ReturnData>;
+
+export type AsyncFunctionResult<ReturnData> = ReturnData | undefined;
+
+export type ControlledAsyncFunction<Args> = (args?: RequestArgs<Args>) => void;
 
 interface IUseRequestReturn<Args, ReturnData> {
   loading: boolean;
   error: Error | undefined;
-  data: ReturnData | undefined;
-  makeControlledRequest: (args?: RequestArgs<Args>) => void;
+  data: AsyncFunctionResult<ReturnData>;
+  makeControlledRequest: ControlledAsyncFunction<Args>;
 }
 
-type AsyncFunction<Args, ReturnData> = (
-  args: Args | undefined
-) => Promise<ReturnData>;
+export type UseRequestType<Args, ReturnData> = () => IUseRequestReturn<
+  Args,
+  ReturnData
+>;
 
 const buildUseRequest = <Args, ReturnData>(
   asyncFunc: AsyncFunction<Args, ReturnData>
-): (() => IUseRequestReturn<Args, ReturnData>) => {
+): UseRequestType<Args, ReturnData> => {
   return (): IUseRequestReturn<Args, ReturnData> => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<ReturnData | undefined>();

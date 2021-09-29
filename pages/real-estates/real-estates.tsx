@@ -4,8 +4,7 @@ import RealEstatesList from 'modules/real-estates-list';
 import Test from 'common/hoc/withHandling';
 
 export const RealEstates: React.FC = () => {
-  const { data, loading, makeControlledRequest, error } =
-    useEstatesGetAllRequest();
+  const { data, makeControlledRequest } = useEstatesGetAllRequest();
 
   useEffect(() => {
     makeControlledRequest();
@@ -14,7 +13,7 @@ export const RealEstates: React.FC = () => {
   return (
     <div>
       <RealEstatesList estates={data} />
-      <Test />
+      <Test a={''} b={''} />
     </div>
   );
 };
