@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react';
-import { EstatesService } from 'services';
 import RealEstatesList from 'modules/real-estates-list';
-import { useEstates, useEstatesDispatch } from 'contexts/real-estates/hooks';
+import { WithHandlingProps, withHandling } from 'common/hoc';
+import { IRealEstate } from 'common/interfaces';
+import { EstatesService } from 'services';
 
-export const RealEstates: React.FC = () => {
-  const estatesState = useEstates();
+type RealEstatesProps = WithHandlingProps<unknown, unknown, IRealEstate[]>;
 
-  const dispatch = useEstatesDispatch();
-
+const RealEstates: React.FC<RealEstatesProps> = ({
+  data,
+  makeControlledRequest,
+}) => {
   useEffect(() => {
-    const estatesService = new EstatesService(dispatch);
-    estatesService.getAll();
-  }, [dispatch]);
+    if (makeControlledRequest) makeControlledRequest();
+  }, [makeControlledRequest]);
 
   return (
     <div>
-      <RealEstatesList estates={estatesState.data} />
+      <RealEstatesList estates={data} />
     </div>
   );
 };
+
+export default withHandling(EstatesService.getAll)(RealEstates);

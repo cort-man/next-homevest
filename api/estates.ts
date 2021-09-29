@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { ENV } from 'common/enums';
+import { ApiConfig } from 'config';
 import { ApiPath } from 'common/enums';
-const { API_ORIGIN_URL } = ENV;
+const { API_ORIGIN_URL } = ApiConfig;
 
 const ESTATES_BASE_URL = API_ORIGIN_URL + ApiPath.REAL_ESTATE;
 

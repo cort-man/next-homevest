@@ -1,2 +1,2 @@
 export * from './api';
-export * from './env';
+export * from 'config/api-config';
