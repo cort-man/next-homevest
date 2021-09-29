@@ -109,11 +109,11 @@ import { IRealEstate } from 'common/interfaces';
 import EstateMarker from 'modules/estates-map/estate-marker';
 import EstatePopup from 'modules/estates-map/estate-popup';
 import styles from 'styles/modules/estates-map/estates-map.module.scss';
-import RealEstatesList from 'modules/real-estates-list';
 
 const containerStyle = {
   width: '100%',
   height: '100%',
+  flexGrow: 1,
 };
 
 const center = {
@@ -164,31 +164,17 @@ const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
   );
 
   return isLoaded ? (
-    <div style={{ display: 'flex' }}>
-      <div style={{ width: '50%' }}>
-        <RealEstatesList estates={estates} />
-      </div>
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          width: '50%',
-        }}
+    <div className={styles.estates_map}>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+        onUnmount={onUnmount}
+        mapContainerClassName={styles.estates_map}
       >
-        <div style={{ flexGrow: 1 }}>
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={10}
-            onUnmount={onUnmount}
-            mapContainerClassName={styles.estates_map}
-          >
-            {propertiesMarkers}
-            {selectedEstatePopup}
-          </GoogleMap>
-        </div>
-      </div>
+        {propertiesMarkers}
+        {selectedEstatePopup}
+      </GoogleMap>
     </div>
   ) : (
     <></>
