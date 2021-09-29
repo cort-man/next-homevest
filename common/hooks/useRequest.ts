@@ -1,15 +1,20 @@
 import { useCallback, useState } from 'react';
 import { FetchStatus } from 'common/types';
 
-export type RequestArgs<Args> = Args | undefined;
+type ControlledAsyncFunction<Args> = (args?: RequestArgs<Args>) => void;
+
+type RequestArgs<Args> = Args | undefined;
+
+type AsyncFunctionResult<ReturnData> = ReturnData | undefined;
+
+type UseRequestType<Args, ReturnData> = () => IUseRequestReturn<
+  Args,
+  ReturnData
+>;
 
 export type AsyncFunction<Args, ReturnData> = (
   args?: RequestArgs<Args>
 ) => Promise<ReturnData>;
-
-export type AsyncFunctionResult<ReturnData> = ReturnData | undefined;
-
-export type ControlledAsyncFunction<Args> = (args?: RequestArgs<Args>) => void;
 
 export interface IUseRequestReturn<Args, ReturnData> {
   status: FetchStatus;
@@ -18,11 +23,6 @@ export interface IUseRequestReturn<Args, ReturnData> {
   makeControlledRequest: ControlledAsyncFunction<Args>;
   setStatusIdle: () => void;
 }
-
-export type UseRequestType<Args, ReturnData> = () => IUseRequestReturn<
-  Args,
-  ReturnData
->;
 
 const buildUseRequest = <Args, ReturnData>(
   asyncFunc: AsyncFunction<Args, ReturnData>
