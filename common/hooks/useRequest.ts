@@ -3,7 +3,7 @@ import { FetchStatus } from 'common/types';
 
 export type RequestArgs<Args> = Args | undefined;
 
-type AsyncFunction<Args, ReturnData> = (
+export type AsyncFunction<Args, ReturnData> = (
   args?: RequestArgs<Args>
 ) => Promise<ReturnData>;
 

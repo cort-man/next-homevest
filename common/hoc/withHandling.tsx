@@ -1,49 +1,41 @@
-import React, { ComponentType, ReactElement, useEffect } from 'react';
-import { ControlledAsyncFunction, UseRequestType } from 'common/hooks';
-import { useEstatesGetAllRequest } from 'services/estates';
-import { IRealEstate } from 'common/interfaces';
+import React, { ComponentType, ReactElement } from 'react';
+import {
+  AsyncFunction,
+  buildUseRequest,
+  IUseRequestReturn,
+} from 'common/hooks';
 
-type WithHandlingInjectedProps<Args, ReturnData> = {
-  requestMethod?: ControlledAsyncFunction<Args>;
-  data?: ReturnData;
-};
+type WithHandlingInjectedProps<Args, ReturnData> = Partial<
+  IUseRequestReturn<Args, ReturnData>
+>;
 
-const withHandling =
-  <Args, ReturnData>(useRequestWithMethod: UseRequestType<Args, ReturnData>) =>
-  <T extends WithHandlingInjectedProps<Args, ReturnData>>(
+export type WithHandlingProps<ComponentProps, Args, ReturnValue> =
+  ComponentProps & WithHandlingInjectedProps<Args, ReturnValue>;
+
+export const withHandling = <Args, ReturnData>(
+  useRequestMethod: AsyncFunction<Args, ReturnData>
+) => {
+  const useRequest = buildUseRequest(useRequestMethod);
+
+  return <T extends WithHandlingInjectedProps<Args, ReturnData>>(
     Component: ComponentType<T>
-  ) =>
-  (hocProps: T): ReactElement<T> => {
-    const { makeControlledRequest, data, setStatusIdle, status, error } =
-      useRequestWithMethod();
+  ) => {
+    const ComponentWithHandling = (hocProps: T): ReactElement<T> => {
+      const { makeControlledRequest, data, setStatusIdle, status, error } =
+        useRequest();
 
-    return (
-      <Component
-        {...(hocProps as T)}
-        data={data}
-        requestMethod={makeControlledRequest}
-      />
-    );
+      return (
+        <Component
+          {...(hocProps as T)}
+          setStatusIdle={setStatusIdle}
+          error={error}
+          status={status}
+          data={data}
+          makeControlledRequest={makeControlledRequest}
+        />
+      );
+    };
+
+    return ComponentWithHandling;
   };
-
-type ITestProps = {
-  a: string;
-  b: string;
 };
-
-type WithHandlingProps<ComponentProps, Args, ReturnValue> = ComponentProps &
-  WithHandlingInjectedProps<Args, ReturnValue>;
-
-const Test: React.FC<WithHandlingProps<ITestProps, unknown, IRealEstate[]>> = ({
-  data,
-  requestMethod,
-}) => {
-  useEffect(() => {
-    if (requestMethod) requestMethod();
-  }, [requestMethod]);
-
-  console.log(data);
-  return <div>123</div>;
-};
-
-export default withHandling(useEstatesGetAllRequest)(Test);
