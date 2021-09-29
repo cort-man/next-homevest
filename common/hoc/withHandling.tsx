@@ -8,15 +8,13 @@ type WithHandlingInjectedProps<Args, ReturnData> = {
   data?: ReturnData;
 };
 
-type Status = 'error' | 'loading' | 'idle';
-
 const withHandling =
   <Args, ReturnData>(useRequestWithMethod: UseRequestType<Args, ReturnData>) =>
   <T extends WithHandlingInjectedProps<Args, ReturnData>>(
     Component: ComponentType<T>
   ) =>
   (hocProps: T): ReactElement<T> => {
-    const { makeControlledRequest, data, loading, error } =
+    const { makeControlledRequest, data, setStatusIdle, status, error } =
       useRequestWithMethod();
 
     return (
