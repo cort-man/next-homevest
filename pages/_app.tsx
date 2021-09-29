@@ -6,7 +6,7 @@ import 'styles/base/reset.scss';
 function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
     <>
-      <Header />
+      {/*<Header />*/}
       <Component {...pageProps} />
     </>
   );

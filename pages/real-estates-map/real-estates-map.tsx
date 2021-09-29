@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EstatesMap from 'modules/estates-map/estates-map';
-import { useEstates } from 'contexts/real-estates/hooks';
-import { MapViewport } from 'common/interfaces';
+import { IRealEstate, MapViewport } from 'common/interfaces';
+import { withHandling, WithHandlingProps } from 'common/hoc';
+import { EstatesService } from 'services';
 
 const defaultMapValue: MapViewport = {
   latitude: 50.4501,
@@ -9,14 +10,19 @@ const defaultMapValue: MapViewport = {
   zoom: 10,
 };
 
-const RealEstatesMap: React.FC = () => {
-  const estatesState = useEstates();
+type RealEstatesProps = WithHandlingProps<unknown, unknown, IRealEstate[]>;
 
-  return (
-    <div>
-      <EstatesMap estates={estatesState.data} />
-    </div>
-  );
+const RealEstatesMap: React.FC<RealEstatesProps> = ({
+  data,
+  makeControlledRequest,
+}) => {
+  useEffect(() => {
+    if (makeControlledRequest) makeControlledRequest();
+  }, [makeControlledRequest]);
+
+  if (!data) return <div>Loading...</div>;
+
+  return <EstatesMap estates={data} />;
 };
 
-export { RealEstatesMap };
+export default withHandling(EstatesService.getAll)(RealEstatesMap);
