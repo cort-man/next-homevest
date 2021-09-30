@@ -108,7 +108,7 @@ import { IRealEstate } from 'common/interfaces';
 import EstateMarker from 'modules/estates-map/estate-marker';
 import EstatePopup from 'modules/estates-map/estate-popup';
 import styles from 'styles/modules/estates-map/estates-map.module.scss';
-import GoogleMapReact from 'google-map-react';
+import GoogleMapReact, { Maps } from 'google-map-react';
 
 const center = {
   lat: 50.4501,
@@ -118,6 +118,25 @@ const center = {
 type EstatesMapProps = {
   estates: IRealEstate[];
 };
+
+function createMapOptions(maps: Maps) {
+  // next props are exposed at maps
+  // "Animation", "ControlPosition", "MapTypeControlStyle", "MapTypeId",
+  // "NavigationControlStyle", "ScaleControlStyle", "StrokePosition", "SymbolPath", "ZoomControlStyle",
+  // "DirectionsStatus", "DirectionsTravelMode", "DirectionsUnitSystem", "DistanceMatrixStatus",
+  // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
+  // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
+  return {
+    zoomControlOptions: {
+      position: maps.ControlPosition.RIGHT_CENTER,
+      style: maps.ZoomControlStyle.SMALL,
+    },
+    mapTypeControlOptions: {
+      position: maps.ControlPosition.TOP_RIGHT,
+    },
+    mapTypeControl: true,
+  };
+}
 
 const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
   const [selectedProperty, setSelectedProperty] =
@@ -141,6 +160,8 @@ const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
     () =>
       selectedProperty ? (
         <EstatePopup
+          lat={selectedProperty.coordinates[0]}
+          lng={selectedProperty.coordinates[1]}
           selectedProperty={selectedProperty}
           setSelectedProperty={setSelectedProperty}
         />
@@ -151,6 +172,7 @@ const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
   return (
     <div className={styles.estates_map}>
       <GoogleMapReact
+        options={createMapOptions}
         bootstrapURLKeys={{ key: AppConfig.GOOGLE_MAPS_API_KEY }}
         center={center}
         zoom={10}

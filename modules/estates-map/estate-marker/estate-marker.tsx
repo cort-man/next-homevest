@@ -1,15 +1,14 @@
 import React from 'react';
 import { IRealEstate } from 'common/interfaces';
 import classes from 'styles/modules/estates-map/estate-marker.module.scss';
+import { Coords } from 'google-map-react';
 
-type PropertyMarkerProps = {
+interface IPropertyMarkerProps extends Coords {
   property: IRealEstate;
   setSelectedProperty: (property: IRealEstate) => void;
-  lat: number;
-  lng: number;
-};
+}
 
-const EstateMarker: React.FC<PropertyMarkerProps> = ({
+const EstateMarker: React.FC<IPropertyMarkerProps> = ({
   property,
   setSelectedProperty,
 }) => {
