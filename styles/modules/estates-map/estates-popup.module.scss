@@ -3,6 +3,9 @@
   width: 500px;
   border-radius: $rounded-sm;
   overflow: hidden;
+  background-color: #fff;
+
+  border-bottom: 5px solid $dark-color-primary;
 
   .picture {
     position: relative;

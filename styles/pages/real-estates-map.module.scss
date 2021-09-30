@@ -1,0 +1,7 @@
+.real_estates_map {
+  display: flex;
+
+  &__estates_list, &__map {
+    width: 50%;
+  }
+}

@@ -1,12 +1,11 @@
 .estates_marker {
 
-  &__icon {
-    cursor: pointer;
+  cursor: pointer;
 
-    background-color: #ff8772;
-    border-radius: $rounded-full;
+  height: 10px;
+  width: 10px;
 
-    height: 10px;
-    width: 10px;
-  }
+  background-color: $dark-color-secondary;
+
+  border-radius: $rounded-full;
 }

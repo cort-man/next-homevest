@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import EstatesMap from 'modules/estates-map/estates-map';
-import { useEstates } from 'contexts/real-estates/hooks';
-import { MapViewport } from 'common/interfaces';
+import { IRealEstate } from 'common/interfaces';
+import { withHandling, WithHandlingProps } from 'common/hoc';
+import { EstatesService } from 'services';
+import RealEstatesList from 'modules/real-estates-list';
+import style from 'styles/pages/real-estates-map.module.scss';
 
-const defaultMapValue: MapViewport = {
-  latitude: 50.4501,
-  longitude: 30.5234,
-  zoom: 10,
-};
+type RealEstatesProps = WithHandlingProps<unknown, unknown, IRealEstate[]>;
 
-const RealEstatesMap: React.FC = () => {
-  const estatesState = useEstates();
+const RealEstatesMap: React.FC<RealEstatesProps> = ({
+  data,
+  makeControlledRequest,
+}) => {
+  useEffect(() => {
+    if (makeControlledRequest) makeControlledRequest();
+  }, [makeControlledRequest]);
+
+  if (!data) return <div>Loading...</div>;
 
   return (
-    <div>
-      <EstatesMap estates={estatesState.data} />
+    <div className={style.real_estates_map}>
+      <div className={style.real_estates_map__estates_list}>
+        <RealEstatesList estates={data} />
+      </div>
+      <div className={style.real_estates_map__map}>
+        <EstatesMap estates={data} />
+      </div>
     </div>
   );
 };
 
-export { RealEstatesMap };
+export default withHandling(EstatesService.getAll)(RealEstatesMap);

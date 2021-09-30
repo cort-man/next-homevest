@@ -1,6 +1,5 @@
 import React from 'react';
 import { IRealEstate } from 'common/interfaces';
-import { InfoWindow } from '@react-google-maps/api';
 import classes from 'styles/modules/estates-map/estates-popup.module.scss';
 import { XIcon } from '@heroicons/react/outline';
 import {
@@ -11,8 +10,9 @@ import {
   LightBulbIcon,
   BeakerIcon,
 } from '@heroicons/react/solid';
+import { Coords } from 'google-map-react';
 
-interface IEstatePopupProps {
+interface IEstatePopupProps extends Coords {
   setSelectedProperty: (property: IRealEstate | null) => void;
   selectedProperty: IRealEstate;
 }
@@ -21,12 +21,7 @@ const EstatePopup: React.FC<IEstatePopupProps> = ({
   selectedProperty,
   setSelectedProperty,
 }) => (
-  <InfoWindow
-    position={{
-      lat: selectedProperty.coordinates[0],
-      lng: selectedProperty.coordinates[1],
-    }}
-  >
+  <div style={{ position: 'absolute', transform: 'translate(-49%, -105%)' }}>
     <div className={classes.estates_popup}>
       <div
         className={classes.picture}
@@ -101,7 +96,7 @@ const EstatePopup: React.FC<IEstatePopupProps> = ({
         </div>
       </div>
     </div>
-  </InfoWindow>
+  </div>
 );
 
 export default EstatePopup;
