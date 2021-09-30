@@ -103,18 +103,12 @@ export default EstatesMap;
 */
 
 import React, { useMemo } from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { AppConfig } from 'config';
 import { IRealEstate } from 'common/interfaces';
 import EstateMarker from 'modules/estates-map/estate-marker';
 import EstatePopup from 'modules/estates-map/estate-popup';
 import styles from 'styles/modules/estates-map/estates-map.module.scss';
-
-const containerStyle = {
-  width: '100%',
-  height: '100%',
-  flexGrow: 1,
-};
+import GoogleMapReact from 'google-map-react';
 
 const center = {
   lat: 50.4501,
@@ -129,21 +123,12 @@ const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
   const [selectedProperty, setSelectedProperty] =
     React.useState<IRealEstate | null>(null);
 
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: AppConfig.GOOGLE_MAPS_API_KEY,
-  });
-
-  const [map, setMap] = React.useState(null);
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
-
   const propertiesMarkers = useMemo(
     () =>
       estates.map((estate) => (
         <EstateMarker
+          lat={estate.coordinates[0]}
+          lng={estate.coordinates[1]}
           key={estate.id}
           property={estate}
           setSelectedProperty={setSelectedProperty}
@@ -163,21 +148,17 @@ const EstatesMap: React.FC<EstatesMapProps> = ({ estates }) => {
     [selectedProperty]
   );
 
-  return isLoaded ? (
+  return (
     <div className={styles.estates_map}>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: AppConfig.GOOGLE_MAPS_API_KEY }}
         center={center}
         zoom={10}
-        onUnmount={onUnmount}
-        mapContainerClassName={styles.estates_map}
       >
         {propertiesMarkers}
         {selectedEstatePopup}
-      </GoogleMap>
+      </GoogleMapReact>
     </div>
-  ) : (
-    <></>
   );
 };
 
